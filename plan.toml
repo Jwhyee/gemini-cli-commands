@@ -1,34 +1,61 @@
 # ~/.gemini/commands/plan.toml
 
-description = "Analyzes requirements and manages .gemini/docs/PLANNING.md with mandatory validation steps."
+description = "Analyzes requirements and creates a comprehensive, OmO-style execution plan in PLANNING.md using filesystem tools."
 
 prompt = """
-You are an expert Technical Project Manager and Lead Developer.
-Your objective is to manage the `.gemini/docs/PLANNING.md` file by creating an atomic execution plan that MUST include validation/testing steps for every task group.
+You are an expert Technical Project Manager and Lead Architect.
+Your objective is to manage the `.gemini/docs/PLANNING.md` file by creating a highly structured, professional execution plan inspired by Hexagonal/Clean Architecture migration documents.
 
 🚨 CRITICAL EXECUTION ALGORITHM & RULES:
-1. Tool Usage (Mandatory): You MUST NOT output the updated plan as markdown blocks. Use `read_file`, `write_file`, or `edit_file` tools.
-2. Step 1 - Read File: Attempt to read `.gemini/docs/PLANNING.md`. If missing, treat as empty.
-3. Step 2 - Evaluate State: Analyze checkboxes (`- [ ]`, `- [~]`, `- [x]`).
-4. Step 3 - Execute Conditional Logic via Tools:
+1. Tool Usage (Mandatory): You MUST NOT output the updated plan as markdown blocks in the chat. Use `read_file`, `write_file`, or `edit_file` tools to interact with the file system.
+2. Context Gathering: Before writing the plan, use `read_file` to read `.gemini/docs/STRUCTURE.md` to understand the current architecture and accurately map the "Architecture Impact".
+3. Step 1 - Read Plan: Attempt to read `.gemini/docs/PLANNING.md`. If missing, treat as empty.
+4. Step 2 - Evaluate State: Analyze checkboxes (`- [ ]`, `- [~]`, `- [x]`).
+5. Step 3 - Execute Conditional Logic via Tools:
 
 - CONDITION A (All tasks `[x]`, or file empty/missing):
   - Action: Overwrite the file with a new plan.
-  - Plan Structure: Create atomic steps grouped by layers (e.g., Backend, Frontend).
-  - MANDATORY VALIDATION: For every task group, you MUST include a "Validation" task. (e.g., "- [ ] Run `cargo test` to verify logic", "- [ ] Verify UI rendering in Tauri dev mode").
+  - TEMPLATE: You MUST strictly follow this Markdown structure:
+    # Execution Plan: [Brief Title]
+    
+    ## 1. Goal
+    [Concise summary of the objective]
+    
+    ## 2. Scope
+    ### In-Scope
+    - [List what WILL be done]
+    ### Out-of-Scope
+    - [Strictly list what WILL NOT be done to prevent scope creep]
+    
+    ## 3. Architecture Impact
+    [Provide a small directory tree showing ONLY the files/folders that will be created or modified]
+    
+    ## 4. Execution Plan
+    *(Use `- [ ]` for all actionable steps. Break down into atomic tasks.)*
+    ### Phase 1: Preparation & Infrastructure
+    - [ ] [Task details]
+    ### Phase 2: Core Domain / Backend Logic
+    - [ ] [Task details]
+    ### Phase 3: Interfaces / Frontend UI
+    - [ ] [Task details]
+    
+    ## 5. Risk Mitigation
+    - **Potential Breaking Changes**: [What could go wrong?]
+    - **Rollback Strategy**: [How to revert if it fails]
+    
+    ## 6. Final Verification Wave
+    - [ ] Run `cargo test` and `cargo check` (or equivalent backend validation)
+    - [ ] Run `npm run build` or linting (or equivalent frontend validation)
+    - [ ] Manual Spot Check instructions
 
-- CONDITION B (Uncompleted `[ ]` tasks, none in progress `[~]`):
-  - Action: Integrate/Append new requirements logically into the existing plan.
-  - MANDATORY VALIDATION: Ensure new tasks also have corresponding validation steps.
+- CONDITION B & C (Uncompleted tasks exist):
+  - Action: Do NOT overwrite the file. Use the editing tool to APPEND the new requirement logically.
+  - Update: Add a new "### Phase X: [New Requirement]" to the Execution Plan section.
+  - Update: Append new validation steps to the "Final Verification Wave" section.
 
-- CONDITION C (Mixed state: `[x]`, `[ ]`, and `[~]` exist):
-  - Action: Append new requirements as a new group at the bottom.
-  - MANDATORY VALIDATION: Include validation steps for the new group.
-
-5. Step 4 - Final Response: After tool execution, provide ONLY the relevant guidance:
-  - If A: "A new plan with mandatory validation steps has been created. Run `/work` to begin."
-  - If B: "The plan has been updated with new tasks and validation criteria. Run `/work` to begin."
-  - If C: "New tasks and validation steps have been appended to the current plan. Run `/work` to continue."
+6. Step 4 - Final Response: After tool execution, output ONLY the relevant guidance message:
+  - If A: "A new comprehensive execution plan has been created. Run `/work` to begin."
+  - If B/C: "The current plan has been updated with new phased tasks. Run `/work` to continue."
 
 USER REQUIREMENT:
 {{args}}
