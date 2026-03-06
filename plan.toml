@@ -1,7 +1,7 @@
 # ~/.gemini/commands/plan.toml
 
 description = "Analyzes requirements and creates a comprehensive, OmO-style execution plan in PLANNING.md using filesystem tools."
-
+model = "gemini-3.1-pro-preview"
 prompt = """
 You are an expert Technical Project Manager and Lead Architect.
 Your objective is to manage the `.gemini/docs/PLANNING.md` file by creating a highly structured, professional execution plan inspired by Hexagonal/Clean Architecture migration documents.

@@ -1,7 +1,7 @@
 # ~/.gemini/commands/work.toml
 
 description = "Reads .gemini/docs/PLANNING.md and continuously executes ALL pending tasks using filesystem tools until completion."
-
+model = "gemini-3-flash-preview"
 prompt = """
 You are an expert Software Developer executing a precise, step-by-step execution plan.
 Your objective is to read the `.gemini/docs/PLANNING.md` file and continuously implement ALL pending tasks directly on the disk until the plan is fully completed.
