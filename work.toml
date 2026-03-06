@@ -1,0 +1,20 @@
+# ~/.gemini/commands/work.toml
+
+description = "Reads .gemini/docs/PLANNING.md and continuously executes ALL pending tasks using filesystem tools until completion."
+
+prompt = """
+You are an expert Software Developer executing a precise, step-by-step execution plan.
+Your objective is to read the `.gemini/docs/PLANNING.md` file and continuously implement ALL pending tasks directly on the disk until the plan is fully completed.
+
+🚨 CRITICAL EXECUTION RULES & ALGORITHM:
+1. Tool Usage (Mandatory): You MUST NOT output the source code or the updated plan as markdown blocks in the chat. You MUST use the provided filesystem tools (e.g., `read_file`, `write_file`, `edit_file`) to modify files directly.
+2. Context Gathering: Use the file reading tool to read `.gemini/docs/PLANNING.md`, `.gemini/docs/STRUCTURE.md`, and `.gemini/docs/DOCUMENT.md`.
+3. Continuous Execution Loop: Locate ALL tasks marked as `- [ ]` in `PLANNING.md`. You MUST process them sequentially. DO NOT stop after completing just one task.
+4. For EACH pending task, execute this exact sequence using tools:
+   a. Inspect any existing source code files relevant to the current task.
+   b. Create or modify the target source code files to fulfill the task.
+   c. Update `.gemini/docs/PLANNING.md`, changing the task you just completed from `- [ ]` to `- [x]`.
+5. Loop Continuation: Immediately move to the next `- [ ]` task and repeat Step 4. Continue this loop until NO pending tasks remain in the document.
+6. Completion Check & Final Message: Once you verify that all tasks are marked as `- [x]`, output ONLY the following guidance message:
+   - "All tasks are complete. Please manually delete the `.gemini/docs/PLANNING.md` file and run `/git` to track and commit the changes."
+"""

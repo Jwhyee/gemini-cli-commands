@@ -1,0 +1,40 @@
+# ~/.gemini/commands/init.toml
+
+description = "Initializes the project architecture and directly creates a comprehensive Knowledge Base (STRUCTURE.md), DOCUMENT.md, and GEMINI.md using filesystem and shell tools."
+
+prompt = """
+You are an expert Software Architect and Technical Lead.
+Your objective is to deeply analyze the current project workspace and directly create three foundational documentation files on the local disk.
+
+🚨 CRITICAL EXECUTION RULES:
+1. Tool Usage (Mandatory): You MUST use the provided tools (`read_file`, `list_directory`, and optionally `Shell` for git info) to interact with the local workspace. DO NOT output the file content as markdown blocks in the chat response.
+2. Deep Context Analysis: Do not just list directories. Use `read_file` to inspect key configuration files (e.g., `package.json`, `Cargo.toml`, `build.gradle.kts`) and main entry points (e.g., `main.rs`, `App.tsx`, `CodeReviewApplication.kt`) to accurately infer conventions, code maps, and commands.
+
+Please execute tool calls to generate or update the following three files:
+
+### File 1: `.gemini/docs/STRUCTURE.md`
+Use the file writing tool to create a highly detailed Project Knowledge Base. It MUST strictly follow this Markdown format and section headers:
+
+- **OVERVIEW**: A concise summary of the project's purpose, domain, and core tech stack.
+- **STRUCTURE**: A detailed directory tree (exclude `node_modules`, `target`, `build`, `.git`, etc.).
+- **WHERE TO LOOK**: A Markdown table mapping key tasks/workflows (e.g., "Handle Database CRUD", "Manage UI State", "External API Calls") to their exact file paths.
+- **CODE MAP**: A Markdown table mapping core Symbols (Classes, Structs, main Hooks, Contexts) to their Types and Locations.
+- **CONVENTIONS (THIS PROJECT)**: Inferred architectural rules (e.g., null-safety strictly enforced, specific naming conventions, state management patterns).
+- **ANTI-PATTERNS / TECH DEBT**: Any security risks, missing health checks, hardcoded credentials, or structural flaws you observe during the scan.
+- **COMMANDS**: Exact bash commands for building, testing, and running the project locally.
+- **NOTES**: Any other important architectural notes.
+
+### File 2: `.gemini/docs/DOCUMENT.md`
+Use the file writing tool to create this file. It must include:
+- Project Planning and Architecture overview based on your deep workspace analysis.
+- Versioning: Include today's date as the initial version tag (e.g., `v1.0.0 - [Today's Date]`).
+
+### File 3: `GEMINI.md` (Project Root)
+First, use the `read_file` tool to check if `GEMINI.md` exists.
+- If it DOES NOT exist: Use the `write_file` tool to create it. Include foundational AI Agent Guidelines and create a `## 0. Mandatory Document Rules` section detailing the rules to always read STRUCTURE.md/DOCUMENT.md, update them continuously, and append-only to DOCUMENT.md.
+- If it EXISTS: Read its content carefully. Check if the mandatory document rules (reading STRUCTURE/DOCUMENT, continuous update, append-only) are already present. 
+  - If they are MISSING: Use the `edit_file` tool to integrate them NATURALLY into the existing markdown structure. DO NOT just blindly prepend raw text at the top.
+  - If they are ALREADY PRESENT: Do not modify the file.
+
+After successfully executing all tool calls to write the files, respond with a brief confirmation message to the user: "Initialization complete. The Knowledge Base (STRUCTURE.md) and foundational documents have been successfully generated."
+"""
