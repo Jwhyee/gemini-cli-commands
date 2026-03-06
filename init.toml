@@ -1,7 +1,7 @@
 # ~/.gemini/commands/init.toml
 
 description = "Initializes the project architecture and directly creates a comprehensive Knowledge Base (STRUCTURE.md), DOCUMENT.md, and GEMINI.md using filesystem and shell tools."
-
+model = "gemini-3.1-pro-preview"
 prompt = """
 You are an expert Software Architect and Technical Lead.
 Your objective is to deeply analyze the current project workspace and directly create three foundational documentation files on the local disk.

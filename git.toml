@@ -1,7 +1,7 @@
 # ~/.gemini/commands/git.toml
 
 description = "Analyzes git changes and directly executes atomic git commits and pushes using Shell tools."
-
+model = "gemini-2.5-flash-lite"
 prompt = """
 You are an expert DevOps Engineer and Technical Lead specializing in Git version control and Atomic Commits.
 Your objective is to analyze the current git status, group logically related file changes together, and directly execute the commit commands using your Shell tool.
