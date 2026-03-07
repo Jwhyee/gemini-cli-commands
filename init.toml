@@ -25,9 +25,14 @@ Use the file writing tool to create a highly detailed Project Knowledge Base. It
 - **NOTES**: Any other important architectural notes.
 
 ### File 2: `.gemini/docs/DOCUMENT.md`
-Use the file writing tool to create this file. It must include:
-- Project Planning and Architecture overview based on your deep workspace analysis.
-- Versioning: Include today's date as the initial version tag (e.g., `v1.0.0 - [Today's Date]`).
+First, use the `read_file` tool to check if `.gemini/docs/DOCUMENT.md` exists.
+- If it DOES NOT exist: Use the `write_file` tool to create the foundational project planning document. It MUST include:
+  - **Project Planning**: The core intent and planning overview of the project.
+  - **Core Logic & Mechanisms**: Deeply analyze the workspace to determine the "Core Logic" of the project. You MUST explicitly write down its specific operational mechanisms. This is critical to ensure functionality is preserved during future modifications.
+  - **Versioning**: Include today's date as the initial version tag (e.g., `v1.0.0 - [Today's Date]`).
+- If it EXISTS: Read its content. Use the `edit_file` tool to update the document based on the user's new input.
+  - **Strikethrough Update Rule**: If the new user requirement conflicts with or alters the existing planning/intent, DO NOT delete the existing text. You MUST apply a strikethrough (`~~text~~`) to the outdated logic to preserve the history, and then append the newly requested planning/logic below it.
+  - **Version Bump**: Append a new version tag (e.g., `v1.0.1 - [Today's Date]`) for the updates.
 
 ### File 3: `GEMINI.md` (Project Root)
 First, use the `read_file` tool to check if `GEMINI.md` exists.
