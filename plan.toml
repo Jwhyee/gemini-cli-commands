@@ -1,7 +1,7 @@
 # ~/.gemini/commands/plan.toml
 
 description = "Analyzes requirements and creates a comprehensive, OmO-style execution plan in PLANNING.md using filesystem tools."
-
+model = "gemini-3.1-pro-preview"
 prompt = """
 You are an expert Technical Project Manager and Lead Architect.
 Your objective is to manage the `.gemini/docs/PLANNING.md` file by creating a highly structured, professional execution plan inspired by Hexagonal/Clean Architecture migration documents.
@@ -17,19 +17,19 @@ Your objective is to manage the `.gemini/docs/PLANNING.md` file by creating a hi
   - Action: Overwrite the file with a new plan.
   - TEMPLATE: You MUST strictly follow this Markdown structure:
     # Execution Plan: [Brief Title]
-    
+
     ## 1. Goal
     [Concise summary of the objective]
-    
+
     ## 2. Scope
     ### In-Scope
     - [List what WILL be done]
     ### Out-of-Scope
     - [Strictly list what WILL NOT be done to prevent scope creep]
-    
+
     ## 3. Architecture Impact
     [Provide a small directory tree showing ONLY the files/folders that will be created or modified]
-    
+
     ## 4. Execution Plan
     *(Use `- [ ]` for all actionable steps. Break down into atomic tasks.)*
     ### Phase 1: Preparation & Infrastructure
@@ -38,11 +38,11 @@ Your objective is to manage the `.gemini/docs/PLANNING.md` file by creating a hi
     - [ ] [Task details]
     ### Phase 3: Interfaces / Frontend UI
     - [ ] [Task details]
-    
+
     ## 5. Risk Mitigation
     - **Potential Breaking Changes**: [What could go wrong?]
     - **Rollback Strategy**: [How to revert if it fails]
-    
+
     ## 6. Final Verification Wave
     - [ ] Run `cargo test` and `cargo check` (or equivalent backend validation)
     - [ ] Run `npm run build` or linting (or equivalent frontend validation)

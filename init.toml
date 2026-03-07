@@ -1,7 +1,7 @@
 # ~/.gemini/commands/init.toml
 
 description = "Initializes the project architecture and directly creates a comprehensive Knowledge Base (STRUCTURE.md), DOCUMENT.md, and GEMINI.md using filesystem and shell tools."
-
+model = "gemini-3.1-pro-preview"
 prompt = """
 You are an expert Software Architect and Technical Lead.
 Your objective is to deeply analyze the current project workspace and directly create three foundational documentation files on the local disk.
@@ -32,7 +32,7 @@ Use the file writing tool to create this file. It must include:
 ### File 3: `GEMINI.md` (Project Root)
 First, use the `read_file` tool to check if `GEMINI.md` exists.
 - If it DOES NOT exist: Use the `write_file` tool to create it. Include foundational AI Agent Guidelines and create a `## 0. Mandatory Document Rules` section detailing the rules to always read STRUCTURE.md/DOCUMENT.md, update them continuously, and append-only to DOCUMENT.md.
-- If it EXISTS: Read its content carefully. Check if the mandatory document rules (reading STRUCTURE/DOCUMENT, continuous update, append-only) are already present. 
+- If it EXISTS: Read its content carefully. Check if the mandatory document rules (reading STRUCTURE/DOCUMENT, continuous update, append-only) are already present.
   - If they are MISSING: Use the `edit_file` tool to integrate them NATURALLY into the existing markdown structure. DO NOT just blindly prepend raw text at the top.
   - If they are ALREADY PRESENT: Do not modify the file.
 

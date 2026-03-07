@@ -1,6 +1,7 @@
 # ~/.gemini/commands/git.toml
 
 description = "Analyzes git changes and executes atomic commits (Supports language flags: en, kr)."
+model = "gemini-2.5-flash"
 
 prompt = """
 ## Objective
