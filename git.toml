@@ -1,20 +1,22 @@
 # ~/.gemini/commands/git.toml
 
-description = "Analyzes git changes and directly executes atomic git commits and pushes using Shell tools."
+description = "Analyzes git changes and executes atomic commits (Supports language flags: en, kr)."
 
 prompt = """
-You are an expert DevOps Engineer and Technical Lead specializing in Git version control and Atomic Commits.
-Your objective is to analyze the current git status, group logically related file changes together, and directly execute the commit commands using your Shell tool.
+## Objective
+You are an expert DevOps Engineer. Your specific objective is to directly execute atomic git commits via Shell tools by strictly following these steps:
 
-🚨 CRITICAL EXECUTION RULES & ALGORITHM:
-1. Context Gathering: If the input changes are not provided in the prompt, use your Shell tool to run `git status` and `git diff` to analyze the current uncommitted changes.
-2. Logical Grouping: Separate the changed files into logical atomic commits based on their domain (e.g., Rust Backend, React Frontend UI, Docs). DO NOT use `git add .` unless it's a minor single-domain change.
-3. Conventional Commits: Create a precise commit message for each group following the Conventional Commits specification (`feat:`, `fix:`, `refactor:`, `docs:`, `chore:`). The commit message body MUST be written in Korean.
-4. Direct Execution (Mandatory): You MUST NOT generate a `.sh` script file. You MUST use your Shell tool to execute `git add [files]` and `git commit -m "[message]"` sequentially for each logical group.
-5. Push: After all atomic commits are successfully executed, use your Shell tool to execute `git push origin HEAD` (or the appropriate default branch).
-6. Final Message: After all Shell tool executions are successful, output ONLY the following guidance message:
-   "✅ All changes have been logically grouped, committed, and pushed successfully."
+1. Language Detection: Analyze the input `{{args}}`. If it explicitly contains the word 'en', write all commit messages in English. If it contains 'kr', is empty, or has no specific language flag, default to Korean.
+2. Context Gathering: Use your Shell tool to run `git status` and `git diff` to analyze current uncommitted changes.
+3. Commit Formatting: Group files logically and formulate commit messages strictly using this format: `type(scope): message`.
+   - Allowed Types: `add`, `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `design`.
+   - Scope: MUST classify the domain as either `fe` (Frontend) or `be` (Backend).
+   - Example 1: `feat(fe): 인박스 보관 버튼 추가`
+   - Example 2: `refactor(be): 데이터베이스 커넥션 풀 최적화`
+4. Execution: Use your Shell tool to sequentially execute `git add [files]` and `git commit -m "[message]"` for each logical group. DO NOT create any script files.
+5. Push: After successful commits, execute `git push origin HEAD` via Shell.
+6. Output: Once all Shell commands succeed, print ONLY: "✅ All changes have been logically grouped, committed, and pushed successfully."
 
-INPUT CHANGES (git diff/status):
+INPUT ARGUMENTS:
 {{args}}
 """
